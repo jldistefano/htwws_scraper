@@ -1,3 +1,5 @@
+#! /home/jdistefano/anaconda3/bin/python3
+
 import cfscrape
 import eyed3
 import json
