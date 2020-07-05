@@ -15,7 +15,11 @@ url = sys.argv[2]
 ##################
 
 # Set up logging
-logging.basicConfig(filename='logs.txt', format='%(asctime)s %(message)s')
+logging.basicConfig(filename='status.log', filemode='a', format='%(asctime)s %(message)s', level=logging.DEBUG)
+logger = logging.getLogger('htwws_scraper')
+fh = logging.FileHandler('status.log')
+fh.setLevel(logging.INFO)
+logger.addHandler(fh)
 
 # Get 2 week archive page
 scraper = cfscrape.create_scraper()
@@ -27,7 +31,7 @@ try:
 		if "mp3" in filename.split('.')[-1]:
 			track_num += 1
 except:
-	logging.error("Destination location \"" + dest + "\" could not be found")
+	logger.error("Destination location \"" + dest + "\" could not be found")
 	sys.exit()
 
 # Try at most 3 times to get page
@@ -46,12 +50,12 @@ try:
 		if htwws == "not found":
 			continue
 except:
-	logging.error("Error while trying to connect to WDCB two week archive url")
+	logger.error("Error while trying to connect to WDCB two week archive url")
 	sys.exit()
 
 # If unable to connect to page, then exit
 if htwws == "not found":
-	logging.warning("How the West Was Strung could not be found")
+	logger.warning("How the West Was Strung could not be found")
 	sys.exit()
 
 # Get date string
@@ -70,7 +74,7 @@ try:
 			for chunk in r.iter_content(chunk_size=8192):
 				f.write(chunk)
 except:
-	logging.error("Error while writing sound file to destination")
+	logger.error("Error while writing sound file to destination")
 	sys.exit()
 
 # Set MP3 Tags
@@ -86,8 +90,8 @@ try:
 	imagedata = open("cover.jpg","rb").read()
 	file.tag.images.set(3, imagedata, "image/jpeg", u"How The West Was Strung: 11pm - 12am 90.9FM WDCB")
 except:
-	logging.warning("Could not find cover art, continuing with no art")
+	logger.warning("Could not find cover art, continuing with no art")
 
 file.tag.save()
 
-logging.info(filename + " scraped and saved")
+logger.info(filename + " scraped and saved")
