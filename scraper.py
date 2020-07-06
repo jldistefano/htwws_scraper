@@ -15,9 +15,9 @@ url = sys.argv[2]
 ##################
 
 # Set up logging
-logging.basicConfig(filename='status.log', filemode='a', format='%(asctime)s %(message)s', level=logging.DEBUG)
+logging.basicConfig(filename='/var/log/htwws_status.log', filemode='a', format='%(asctime)s %(message)s', level=logging.DEBUG)
 logger = logging.getLogger('htwws_scraper')
-fh = logging.FileHandler('status.log')
+fh = logging.FileHandler('/var/log/htwws_status.log')
 fh.setLevel(logging.INFO)
 logger.addHandler(fh)
 

@@ -10,4 +10,10 @@ The current URL that lists the json content of the two week archive is
 
 This script is best utilized as an anacron job as follows
 
-...
+`7	0	htwws.scraper	/usr/bin/python3 [path to scraper.py] "[save destination]" "[above url]"`
+
+Remember to have libraries available to anacron by running
+
+`sudo -H pip3 install [lib]`
+
+for the imports used
