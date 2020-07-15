@@ -16,4 +16,6 @@ Remember to have libraries available to anacron by running
 
 `sudo -H pip3 install [lib]`
 
-for the imports used
+for the imports used if used with anacron, or just the run below
+
+`sudo -H pip3 install cfscrape eyed3 python-dateutil datetime`
