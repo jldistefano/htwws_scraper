@@ -4,6 +4,7 @@ import json
 import sys
 import logging
 from os import listdir
+from os import path
 import datetime
 from dateutil import parser
 
@@ -15,14 +16,18 @@ url = sys.argv[2]
 ##################
 
 # Set up logging
-logging.basicConfig(filename='/var/log/htwws_status.log', filemode='a', format='%(asctime)s %(message)s', level=logging.DEBUG)
+logging.basicConfig(filename='/var/log/htwws_scraper.log', filemode='a', format='%(asctime)s %(message)s', level=logging.DEBUG)
 logger = logging.getLogger('htwws_scraper')
-fh = logging.FileHandler('/var/log/htwws_status.log')
+fh = logging.FileHandler('/var/log/htwws_scraper.log')
 fh.setLevel(logging.INFO)
 logger.addHandler(fh)
 
 # Get 2 week archive page
 scraper = cfscrape.create_scraper()
+
+# If destination does not end in /, insert /
+if dest[-1] != '/'
+	dest += '/'
 
 # Find how many programs have already been saved
 track_num = 1
@@ -64,9 +69,14 @@ fulldate = htwws['pubDate']
 dateobj = parser.parse(fulldate)
 datestring = dateobj.strftime("%m-%d-%y")
 
+# Check if file exists, if so then exit
+filename = dest + "htwws-" + datestring + ".mp3"
+if path.isfile(filename):
+	logger.warning(filename + " already exists, exiting...")
+	sys.exit()
+
 # Download Raw Audio
 raw_audio = scraper.get(htwws['url'], stream=True)
-filename = dest + "htwws-" + datestring + ".mp3"
 try:
 	with raw_audio as r:
 		r.raise_for_status()
