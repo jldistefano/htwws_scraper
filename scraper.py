@@ -35,15 +35,17 @@ def waitForInternetConnection(seconds, interval):
 	return False
 
 # Set up logging file if not exists
-logging_path = path.dirname(path.abspath(__file__)) + '/logs'
-if not path.exists(logging_path + '/htwws_scraper.log'):
+logging_path = path.dirname(path.abspath(__file__)) + '/.logs'
+logging_file = logging_path + '/htwws_scraper.log'
+
+if not path.exists(logging_file):
 	if not path.exists(logging_path):
 		mkdir(logging_path)
-	fh = open(logging_path + '/htwws_scraper.log', 'w+')
+	fh = open(logging_file, 'w+')
 	fh.close()
 
 # Set up logging
-logging.basicConfig(filename=logging_path + '/htwws_scraper.log', filemode='a', format='%(asctime)s %(message)s', level=logging.INFO)
+logging.basicConfig(filename=logging_file, filemode='a', format='%(asctime)s %(message)s', level=logging.INFO)
 
 # Get 2 week archive page
 scraper = cfscrape.create_scraper()
