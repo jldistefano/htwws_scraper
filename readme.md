@@ -10,12 +10,14 @@ The current URL that lists the json content of the two week archive is
 
 This script is best utilized as an anacron job as follows
 
-`7	0	htwws.scraper	/usr/bin/python3 [path to scraper.py] "[save destination]" "[above url]"`
+`7	5	htwws.scraper	/usr/bin/python3 [path to scraper.py] "[save destination]" "[above url]"`
+
+* 5 minute delay is useful to allow the computer to get an internet connection before attempting to scrape
 
 Remember to have libraries available to anacron by running
 
 `sudo -H pip3 install [lib]`
 
-for the imports used if used with anacron, or just the run below
+for the imports used if used with anacron, or just Mark run below
 
-`sudo -H pip3 install cfscrape eyed3 python-dateutil datetime`
+`sudo -H pip3 install cfscrape eyed3 python-dateutil datetime requests`
